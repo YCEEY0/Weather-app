@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+ 
+  <!-- Font Awesome — за иконките на времето -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+ 
+  <!-- Google Fonts — Syne (заглавия) + DM Sans (текст) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+ 
+  <!-- Нашите стилове -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+ 
+  <div class="weather-app">
+ 
+    <!-- Заглавие -->
+    <h1 class="app-title">
+      <i class="fa-solid fa-cloud-sun"></i>
+      WeatherApp
+    </h1>
+ 
+    <!-- ФОРМА ЗА ТЪРСЕНЕ -->
+    <form id="search-form" novalidate>
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Въведи град..."
+          autocomplete="off"
+        />
+        <button type="submit" id="search-btn" aria-label="Търси">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button type="button" id="geo-btn" aria-label="Използвай моята локация">
+          <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+      </div>
+    </form>
+ 
+    <!-- ИСТОРИЯ НА ТЪРСЕНИЯТА -->
+    <div id="history-container" class="history-container" aria-label="История на търсенията"></div>
+ 
+    <!-- ИНДИКАТОР ЗА ЗАРЕЖДАНЕ -->
+    <div id="loading" class="loading" role="status" aria-live="polite">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <span>Зарежда се...</span>
+    </div>
+ 
+    <!-- СЪОБЩЕНИЕ ЗА ГРЕШКА -->
+    <div id="error" class="error" role="alert" aria-live="assertive">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span id="error-text">Грешка</span>
+    </div>
+ 
+    <!-- БЛОК С ИНФОРМАЦИЯ ЗА ВРЕМЕТО -->
+    <div id="weather-info" class="weather-info" aria-live="polite">
+ 
+      <h2 id="city-name" class="city-name">--</h2>
+ 
+      <div class="weather-main">
+        <i id="weather-icon" class="weather-icon fa-solid fa-sun"></i>
+        <div class="temp-group">
+          <span id="temperature" class="temperature">--</span>
+          <button id="toggle-unit" class="toggle-unit" aria-label="Превключи единица за температура">
+            °C / °F
+          </button>
+        </div>
+      </div>
+ 
+      <p id="weather-condition" class="weather-condition">--</p>
+ 
+      <div class="weather-details">
+        <div class="detail-card">
+          <i class="fa-solid fa-wind"></i>
+          <span>Вятър</span>
+          <strong id="wind-speed">--</strong>
+        </div>
+        <div class="detail-card" id="aqi-card">
+          <i class="fa-solid fa-lungs"></i>
+          <span>Въздух</span>
+          <strong id="air-quality">--</strong>
+          <em id="aqi-label"></em>
+        </div>
+      </div>
+ 
+      <!-- 5-ДНЕВНА ПРОГНОЗА -->
+      <div class="forecast-section">
+        <h3 class="forecast-title">Прогноза за 5 дни</h3>
+        <div id="forecast" class="forecast-grid"></div>
+      </div>
+ 
+    </div><!-- /weather-info -->
+ 
+  </div><!-- /weather-app -->
+ 
+  <!-- ВАЖНО: обикновен script, НЕ type="module" -->
+  <script src="script.js"></script>
+</body>
+</html>
