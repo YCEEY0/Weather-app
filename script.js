@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   script.js — Weather App (ОПРАВЕН, ПЪЛЕН, РАБОТЕЩ)
+   script.js — Weather App (финална версия)
 ══════════════════════════════════════════════════════ */
 
 /* ───────────────────────────────────────────────
@@ -89,7 +89,47 @@ const WEATHER_ICONS = {
 };
 
 /* ───────────────────────────────────────────────
-   5. UI ФУНКЦИИ
+   5. ДИНАМИЧНИ ГРАДИЕНТИ (много по‑меки)
+────────────────────────────────────────────── */
+const WEATHER_GRADIENTS = {
+  0:'linear-gradient(135deg, #0d1117 0%, #111720 100%)',
+  1:'linear-gradient(135deg, #0d1117 0%, #111720 100%)',
+
+  2:'linear-gradient(135deg, #0b0f1a 0%, #141a2b 50%, #1c1f33 100%)',
+  3:'linear-gradient(135deg, #0c1118 0%, #151c26 50%, #0c1118 100%)',
+
+  45:'linear-gradient(135deg, #11151c 0%, #1a1f28 50%, #11151c 100%)',
+  48:'linear-gradient(135deg, #11151c 0%, #1a1f28 50%, #11151c 100%)',
+
+  51:'linear-gradient(135deg, #0a141a 0%, #0f1f28 50%, #132833 100%)',
+  53:'linear-gradient(135deg, #0a141a 0%, #0f1f28 50%, #132833 100%)',
+  55:'linear-gradient(135deg, #081016 0%, #0c1a24 50%, #11242e 100%)',
+
+  61:'linear-gradient(135deg, #080d18 0%, #0d1a33 50%, #112044 100%)',
+  63:'linear-gradient(135deg, #070a14 0%, #0b152b 50%, #0f1c3d 100%)',
+  65:'linear-gradient(135deg, #050810 0%, #0a1122 50%, #0d162f 100%)',
+
+  71:'linear-gradient(135deg, #0a1a28 0%, #123a55 50%, #1a4f6d 100%)',
+  73:'linear-gradient(135deg, #081520 0%, #10324a 50%, #184a63 100%)',
+  75:'linear-gradient(135deg, #06101a 0%, #0d283f 50%, #153d55 100%)',
+
+  80:'linear-gradient(135deg, #080d18 0%, #0d1a33 50%, #112044 100%)',
+  81:'linear-gradient(135deg, #070a14 0%, #0b152b 50%, #0f1c3d 100%)',
+  82:'linear-gradient(135deg, #050810 0%, #0a1122 50%, #0d162f 100%)',
+
+  95:'linear-gradient(135deg, #0a0014 0%, #15002a 50%, #1f003d 100%)',
+  96:'linear-gradient(135deg, #080012 0%, #120024 50%, #1c0035 100%)',
+  99:'linear-gradient(135deg, #06000f 0%, #100020 50%, #1a0030 100%)',
+};
+
+function applyWeatherGradient(code) {
+  document.body.style.background =
+    WEATHER_GRADIENTS[code] ??
+    'linear-gradient(135deg, #0d1117 0%, #111720 100%)';
+}
+
+/* ───────────────────────────────────────────────
+   6. UI ФУНКЦИИ
 ────────────────────────────────────────────── */
 function showLoading()  { DOM.loading.classList.add('visible'); }
 function hideLoading()  { DOM.loading.classList.remove('visible'); }
@@ -109,7 +149,7 @@ function resetUI() {
 }
 
 /* ───────────────────────────────────────────────
-   6. API — ГЕОКОДИРАНЕ
+   7. API — ГЕОКОДИРАНЕ
 ────────────────────────────────────────────── */
 async function getCoordinates(cityName) {
   const url = `${GEO_URL}?name=${encodeURIComponent(cityName)}&count=1&format=json`;
@@ -130,7 +170,7 @@ async function getCoordinates(cityName) {
 }
 
 /* ───────────────────────────────────────────────
-   7. API — ВРЕМЕ + КЕШ
+   8. API — ВРЕМЕ + КЕШ
 ────────────────────────────────────────────── */
 async function fetchWeatherData(cacheKey, lat, lon) {
   const cached = cache[cacheKey];
@@ -151,7 +191,7 @@ async function fetchWeatherData(cacheKey, lat, lon) {
 }
 
 /* ───────────────────────────────────────────────
-   8. API — AQI
+   9. API — AQI
 ────────────────────────────────────────────── */
 async function fetchAirQuality(lat, lon) {
   const url =
@@ -172,7 +212,7 @@ async function fetchAirQuality(lat, lon) {
 }
 
 /* ───────────────────────────────────────────────
-   9. РЕНДЕРИРАНЕ НА UI
+   10. РЕНДЕРИРАНЕ НА UI
 ────────────────────────────────────────────── */
 function displayWeather(label, data) {
   const cw = data.current_weather;
@@ -185,6 +225,8 @@ function displayWeather(label, data) {
   DOM.weatherCondition.textContent = WEATHER_CONDITIONS[cw.weathercode] ?? "Неизвестно";
   DOM.weatherIcon.className = `weather-icon ${WEATHER_ICONS[cw.weathercode]}`;
   DOM.windSpeed.textContent = `${cw.windspeed} km/h`;
+
+  applyWeatherGradient(cw.weathercode);
 
   renderForecast(data.daily);
 
@@ -230,7 +272,7 @@ function renderForecast(daily) {
 }
 
 /* ───────────────────────────────────────────────
-   10. ТЪРСЕНЕ
+   11. ТЪРСЕНЕ
 ────────────────────────────────────────────── */
 async function runSearch(cacheKey, lat, lon, label) {
   const [weather, aqi] = await Promise.all([
@@ -262,7 +304,7 @@ async function searchWeatherByCity(cityRaw) {
 }
 
 /* ───────────────────────────────────────────────
-   11. ИСТОРИЯ
+   12. ИСТОРИЯ
 ────────────────────────────────────────────── */
 function getHistory() {
   return JSON.parse(localStorage.getItem("weatherHistory") ?? "[]");
@@ -290,7 +332,7 @@ function renderHistory() {
 }
 
 /* ───────────────────────────────────────────────
-   12. ГЕОЛОКАЦИЯ
+   13. ГЕОЛОКАЦИЯ
 ────────────────────────────────────────────── */
 function loadWeatherByGeolocation() {
   if (!navigator.geolocation)
@@ -312,7 +354,7 @@ function loadWeatherByGeolocation() {
 }
 
 /* ───────────────────────────────────────────────
-   13. °C / °F
+   14. °C / °F
 ────────────────────────────────────────────── */
 function updateTemperatureDisplay() {
   if (lastTempC === null) return;
@@ -325,7 +367,7 @@ function updateTemperatureDisplay() {
 }
 
 /* ───────────────────────────────────────────────
-   14. EVENT LISTENERS
+   15. EVENT LISTENERS
 ────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   renderHistory();
