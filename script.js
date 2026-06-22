@@ -266,6 +266,27 @@ function displayAirQuality(aqi) {
     DOM.aqiLabel.textContent = "Лошо";
   }
 }
+function getAqiDescription(aqi) {
+  if (aqi <= 50) return "Въздухът е чист. Няма рискове за здравето.";
+  if (aqi <= 100) return "Въздухът е приемлив. Чувствителните хора може да усетят дискомфорт.";
+  if (aqi <= 150) return "Нездравословно за чувствителни групи.";
+  if (aqi <= 200) return "Нездравословно. Препоръчва се ограничаване на активностите навън.";
+  if (aqi <= 300) return "Много нездравословно. Избягвай престой навън.";
+  return "Опасно. Остани на закрито.";
+}
+
+function updateAqiTooltip(aqi) {
+  const tooltip = document.getElementById("aqi-tooltip");
+  if (aqi === null) {
+    tooltip.textContent = "Няма налични данни за качеството на въздуха.";
+    return;
+  }
+
+  tooltip.innerHTML = `
+    <strong>AQI: ${aqi}</strong><br>
+    ${getAqiDescription(aqi)}
+  `;
+}
 
 function renderForecast(daily) {
   DOM.forecast.innerHTML = "";
@@ -293,6 +314,9 @@ async function runSearch(cacheKey, lat, lon, label) {
 
   displayWeather(label, weather);
   displayAirQuality(aqi);
+  DOM.airQuality.textContent = aqi;
+updateAqiTooltip(aqi);
+
 }
 
 async function searchWeatherByCity(cityRaw) {
@@ -394,4 +418,19 @@ document.addEventListener("DOMContentLoaded", () => {
     isCelsius = !isCelsius;
     updateTemperatureDisplay();
   });
+
+  /* ────────────────────────────────
+     AQI Tooltip Hover
+  ──────────────────────────────── */
+  const aqiCard = document.getElementById("aqi-card");
+  const aqiTooltip = document.getElementById("aqi-tooltip");
+
+  aqiCard.addEventListener("mouseenter", () => {
+    aqiTooltip.classList.add("visible");
+  });
+
+  aqiCard.addEventListener("mouseleave", () => {
+    aqiTooltip.classList.remove("visible");
+  });
 });
+

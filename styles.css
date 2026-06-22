@@ -406,3 +406,33 @@ body {
   .temperature { font-size: 3rem; }
   .weather-icon { font-size: 3.5rem; }
 }
+/* ── AQI Tooltip ── */
+.aqi-tooltip {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  width: 220px;
+  text-align: center;
+  line-height: 1.35;
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 999;
+}
+
+.aqi-tooltip.visible {
+  opacity: 1;
+}
+
+#aqi-card {
+  position: relative;
+  cursor: pointer;
+}
