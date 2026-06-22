@@ -81,20 +81,27 @@
  
       <p id="weather-condition" class="weather-condition">--</p>
  
-      <div class="weather-details">
-        <div class="detail-card">
-          <i class="fa-solid fa-wind"></i>
-          <span>Вятър</span>
-          <strong id="wind-speed">--</strong>
-        </div>
-        <div id="aqi-tooltip" class="aqi-tooltip"></div>
+   <div class="weather-details">
 
-          <i class="fa-solid fa-lungs"></i>
-          <span>Въздух</span>
-          <strong id="air-quality">--</strong>
-          <em id="aqi-label"></em>
-        </div>
-      </div>
+  <div class="detail-card">
+    <i class="fa-solid fa-wind"></i>
+    <span>Вятър</span>
+    <strong id="wind-speed">--</strong>
+  </div>
+
+  <!-- AQI КАРТА (поправена) -->
+  <div id="aqi-card" class="detail-card">
+    <i class="fa-solid fa-lungs"></i>
+    <span>Въздух</span>
+    <strong id="air-quality">--</strong>
+    <em id="aqi-label"></em>
+
+    <!-- Tooltip вътре в картата (задължително!) -->
+    <div id="aqi-tooltip" class="aqi-tooltip"></div>
+  </div>
+
+</div>
+
  
       <!-- 5-ДНЕВНА ПРОГНОЗА -->
       <div class="forecast-section">
