@@ -146,12 +146,57 @@ async function getCoordinates(cityName) {
 
   return { label, name: best.name, latitude: best.latitude, longitude: best.longitude };
 }
+// Превръща кирилица → латиница (за Open‑Meteo)
 function toLatin(text) {
-  return text.normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9\s]/g, "")
-    .trim();
+  const map = {
+    а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ж: "zh", з: "z",
+    и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o", п: "p",
+    р: "r", с: "s", т: "t", у: "u", ф: "f", х: "h", ц: "ts", ч: "ch",
+    ш: "sh", щ: "sht", ъ: "a", ь: "", ю: "yu", я: "ya"
+  };
+
+  return text
+    .toLowerCase()
+    .split("")
+    .map(ch => map[ch] || ch)
+    .join("");
 }
+
+// Търсене на град
+async function searchCity(cityName) {
+  const query = toLatin(cityName.trim());
+
+  if (!query) {
+    showError("Моля, въведи град.");
+    return;
+  }
+
+  try {
+    loading.classList.add("visible");
+    errorBox.classList.remove("visible");
+
+    const geoRes = await fetch(
+      `https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`
+    );
+
+    const geoData = await geoRes.json();
+
+    if (!geoData.results || geoData.results.length === 0) {
+      showError(`Градът "${cityName}" не беше намерен.`);
+      return;
+    }
+
+    const { latitude, longitude, name, country } = geoData.results[0];
+
+    await loadWeather(latitude, longitude, name, country);
+
+  } catch (err) {
+    showError("Възникна грешка при търсенето.");
+  } finally {
+    loading.classList.remove("visible");
+  }
+}
+
 
 
 /**
@@ -230,10 +275,7 @@ function resetUI() {
  * Показва съобщение за грешка.
  * @param {string} message
  */
-function showError(message) {
-  DOM.errorText.textContent = message;
-  DOM.error.classList.add('visible');
-}
+
 
 /**
  * Прилага фонов градиент според WMO кода на времето.
@@ -459,6 +501,11 @@ function loadWeatherByGeolocation() {
         : 'Не може да се определи локацията.');
     }
   );
+}
+function showError(msg) {
+  errorText.textContent = msg;
+  errorBox.classList.add("visible");
+  setTimeout(() => errorBox.classList.remove("visible"), 4000);
 }
 
 /* ══════════════════════════════════
