@@ -146,6 +146,13 @@ async function getCoordinates(cityName) {
 
   return { label, name: best.name, latitude: best.latitude, longitude: best.longitude };
 }
+function toLatin(text) {
+  return text.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .trim();
+}
+
 
 /**
  * Изтегля прогнозата по координати. Използва кеш с TTL 10 мин.
@@ -463,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   DOM.searchForm.addEventListener('submit', e => {
     e.preventDefault();
-    const city = DOM.searchInput.value.trim();
+    const city = toLatin(searchInput.value.trim());
     if (!city) { showError('Моля, въведи название на град.'); return; }
     searchWeatherByCity(city);
   });
