@@ -92,35 +92,46 @@ const WEATHER_ICONS = {
    5. ДИНАМИЧНИ ГРАДИЕНТИ (много по‑меки)
 ────────────────────────────────────────────── */
 const WEATHER_GRADIENTS = {
-  0:'linear-gradient(135deg, #0d1117 0%, #111720 100%)',
-  1:'linear-gradient(135deg, #0d1117 0%, #111720 100%)',
+  // ☀️ Ясно — спокоен, премиум, тъмен син → леко лилаво
+  0:  'linear-gradient(135deg, #0d1117 0%, #1a1f2b 40%, #232a38 100%)',
+  1:  'linear-gradient(135deg, #0d1117 0%, #1a1f2b 40%, #232a38 100%)',
 
-  2:'linear-gradient(135deg, #0b0f1a 0%, #141a2b 50%, #1c1f33 100%)',
-  3:'linear-gradient(135deg, #0c1118 0%, #151c26 50%, #0c1118 100%)',
+  // ⛅ Частично облачно — синьо → лилаво, по‑драматично
+  2:  'linear-gradient(135deg, #0b0f1a 0%, #1a2340 50%, #2a2f55 100%)',
 
-  45:'linear-gradient(135deg, #11151c 0%, #1a1f28 50%, #11151c 100%)',
-  48:'linear-gradient(135deg, #11151c 0%, #1a1f28 50%, #11151c 100%)',
+  // ☁️ Облачно — студено синьо‑сиво, по‑дълбоко
+  3:  'linear-gradient(135deg, #0c1118 0%, #1b2430 50%, #111821 100%)',
 
-  51:'linear-gradient(135deg, #0a141a 0%, #0f1f28 50%, #132833 100%)',
-  53:'linear-gradient(135deg, #0a141a 0%, #0f1f28 50%, #132833 100%)',
-  55:'linear-gradient(135deg, #081016 0%, #0c1a24 50%, #11242e 100%)',
+  // 🌫️ Мъгла — матирано сиво‑синьо, “frosted glass” ефект
+  45: 'linear-gradient(135deg, #11151c 0%, #1c222b 50%, #11151c 100%)',
+  48: 'linear-gradient(135deg, #11151c 0%, #1c222b 50%, #11151c 100%)',
 
-  61:'linear-gradient(135deg, #080d18 0%, #0d1a33 50%, #112044 100%)',
-  63:'linear-gradient(135deg, #070a14 0%, #0b152b 50%, #0f1c3d 100%)',
-  65:'linear-gradient(135deg, #050810 0%, #0a1122 50%, #0d162f 100%)',
+  // 🌦️ Ръмеж — тъмно тюркоазено → синьо, по‑кинетично
+  51: 'linear-gradient(135deg, #0a141a 0%, #123040 50%, #1a4455 100%)',
+  53: 'linear-gradient(135deg, #0a141a 0%, #123040 50%, #1a4455 100%)',
+  55: 'linear-gradient(135deg, #081016 0%, #102a38 50%, #173c4d 100%)',
 
-  71:'linear-gradient(135deg, #0a1a28 0%, #123a55 50%, #1a4f6d 100%)',
-  73:'linear-gradient(135deg, #081520 0%, #10324a 50%, #184a63 100%)',
-  75:'linear-gradient(135deg, #06101a 0%, #0d283f 50%, #153d55 100%)',
+  // 🌧️ Дъжд — дълбоко кобалтово синьо → индиго
+  61: 'linear-gradient(135deg, #080d18 0%, #0f1f3d 50%, #1a2f55 100%)',
+  63: 'linear-gradient(135deg, #070a14 0%, #0d1a33 50%, #182a4a 100%)',
+  65: 'linear-gradient(135deg, #050810 0%, #0a1528 50%, #14253d 100%)',
 
-  80:'linear-gradient(135deg, #080d18 0%, #0d1a33 50%, #112044 100%)',
-  81:'linear-gradient(135deg, #070a14 0%, #0b152b 50%, #0f1c3d 100%)',
-  82:'linear-gradient(135deg, #050810 0%, #0a1122 50%, #0d162f 100%)',
+  // ❄️ Сняг — чисто ледено синьо → светъл циан
+  71: 'linear-gradient(135deg, #0a1a28 0%, #1a4f6d 50%, #2a7fa0 100%)',
+  73: 'linear-gradient(135deg, #081520 0%, #184a63 50%, #2a7a95 100%)',
+  75: 'linear-gradient(135deg, #06101a 0%, #153d55 50%, #256a85 100%)',
 
-  95:'linear-gradient(135deg, #0a0014 0%, #15002a 50%, #1f003d 100%)',
-  96:'linear-gradient(135deg, #080012 0%, #120024 50%, #1c0035 100%)',
-  99:'linear-gradient(135deg, #06000f 0%, #100020 50%, #1a0030 100%)',
+  // 🌦️ Превалявания — синьо → тъмно синьо
+  80: 'linear-gradient(135deg, #080d18 0%, #0d1a33 50%, #112044 100%)',
+  81: 'linear-gradient(135deg, #070a14 0%, #0b152b 50%, #0f1c3d 100%)',
+  82: 'linear-gradient(135deg, #050810 0%, #0a1122 50%, #0d162f 100%)',
+
+  // ⛈️ Буря — мистично тъмно лилаво → индиго
+  95: 'linear-gradient(135deg, #0a0014 0%, #1a0033 50%, #2a004d 100%)',
+  96: 'linear-gradient(135deg, #080012 0%, #15002a 50%, #23003f 100%)',
+  99: 'linear-gradient(135deg, #06000f 0%, #120024 50%, #1e0035 100%)',
 };
+
 
 function applyWeatherGradient(code) {
   document.body.style.background =
