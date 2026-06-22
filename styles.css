@@ -5,8 +5,8 @@
 
 /* ── CSS ПРОМЕНЛИВИ ── */
 :root {
-  --bg-from: #0b0e13;
-  --bg-to:   #11151c;
+--bg-from: #0d0f14;
+--bg-to:   #0f1218;
 
   --glass: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.06);
